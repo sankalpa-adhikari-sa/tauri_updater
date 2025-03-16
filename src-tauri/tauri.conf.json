@@ -39,7 +39,7 @@
       "windows": {
         "installMode": "passive"
       },
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEM1MEE0M0NCM0ZGNjY3REQKUldUZFovWS95ME1LeGI2Vm4zak9Lb21DT1VMMGIvUmZidTdpVUJIVmRUUjJqWW1MbkxhRFdMQUkK",
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEYxQjc3NTQ4NjI3QUQwRDYKUldUVzBIcGlTSFczOGV3RXlWVktybjYwdGJpRW80cWNqYVN2SnJiamx6RXVRL2duYVAvQS93REkK",
       "endpoints": [
         "https://github.com/sankalpa-adhikari-sa/tauri_updater/releases/latest/download/latest.json"
       ]
