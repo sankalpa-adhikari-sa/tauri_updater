@@ -2,9 +2,9 @@ import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import "./index.css";
-// Import the generated route tree
 import { routeTree } from "./routeTree.gen.ts";
 import { AuthProvider, useAuth } from "./lib/authProvider.tsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Create a new router instance
 const router = createRouter({
@@ -12,7 +12,7 @@ const router = createRouter({
   defaultPreload: "intent",
   scrollRestoration: true,
   context: {
-    auth: undefined!, // This will be set after we wrap the app in an AuthProvider
+    auth: undefined!,
   },
 });
 
@@ -22,14 +22,21 @@ declare module "@tanstack/react-router" {
     router: typeof router;
   }
 }
-
+export const queryClient = new QueryClient();
 function App() {
-  const auth = useAuth();
   return (
     <AuthProvider>
-      <RouterProvider router={router} context={{ auth }} />;
+      <QueryClientProvider client={queryClient}>
+        <Router />
+      </QueryClientProvider>
     </AuthProvider>
   );
+}
+
+function Router() {
+  const auth = useAuth();
+  console.log("from main", auth);
+  return <RouterProvider router={router} context={{ auth }} />;
 }
 
 // Render the app

@@ -2,12 +2,12 @@ import { supabase } from "@/lib/supabaseClient";
 import { Session } from "@supabase/supabase-js";
 import React, { createContext, useState, useEffect, useContext } from "react";
 
-export type AuthContextType = {
+export type AuthContext = {
   session: Session | null;
   isLoading: boolean;
 };
 
-const AuthContext = createContext<AuthContextType>({
+const AuthContext = createContext<AuthContext>({
   session: null,
   isLoading: true,
 });
@@ -45,9 +45,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider value={{ session, isLoading }}>
-      {children}
+      {isLoading ? null : children}
     </AuthContext.Provider>
   );
 }
 
-export const useAuth = () => useContext(AuthContext);
+export function useAuth() {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+}

@@ -3,9 +3,19 @@ import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_private")({
   beforeLoad: ({ context, location }) => {
-    if (!context.auth.session) {
+    const { session, isLoading } = context.auth;
+    console.log("Private route beforeLoad - Session:", session);
+    console.log("Private route beforeLoad - isLoading:", isLoading);
+
+    if (context.auth == null || isLoading) {
+      console.log("Private is still loading, skipping redirect...");
+      return;
+    }
+
+    if (!session) {
+      console.log("Redirecting to dashboard, session exists");
       throw redirect({
-        to: "/login",
+        to: "/auth",
         search: {
           redirect: location.href,
         },
