@@ -28,7 +28,9 @@ function Index() {
     UpdaterService({ autoCheck: false });
 
   const handleCheckUpdate = async () => {
+    console.log("hello");
     await checkForUpdate();
+    console.log(updateStatus, loading);
     if (updateStatus.version && !updateStatus.status) {
       toast.info(`New update available: v${updateStatus.version}`, {
         description: updateStatus.releaseNotes,

@@ -35,7 +35,7 @@ function App() {
 
 function Router() {
   const auth = useAuth();
-  console.log("from main", auth);
+
   return <RouterProvider router={router} context={{ auth }} />;
 }
 

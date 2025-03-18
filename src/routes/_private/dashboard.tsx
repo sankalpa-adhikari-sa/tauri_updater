@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useAuthentication } from "@/hooks/useAuthentication";
+import UpdaterService from "@/lib/updaterService";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
@@ -31,11 +32,36 @@ function RouteComponent() {
       }
     );
   };
+  const { loading, updateStatus, checkForUpdate, downloadAndInstall } =
+    UpdaterService({ autoCheck: false });
+  const handleCheckUpdate = async () => {
+    console.log(loading, updateStatus);
+    await checkForUpdate();
+    if (updateStatus.version && !updateStatus.status) {
+      toast.info(`New update available: v${updateStatus.version}`, {
+        description: updateStatus.releaseNotes,
+        action: {
+          label: "Update Now",
+          onClick: downloadAndInstall,
+        },
+      });
+    } else if (updateStatus.status === "Up-to-date") {
+      toast.success("App is up to date");
+    }
+  };
 
   return (
     <div>
       Hello "/_private/dashboard"!
       <Button onClick={handleLogout}>logout</Button>
+      <Button
+        onClick={handleCheckUpdate}
+        disabled={loading}
+        variant={"outline"}
+        size={"sm"}
+      >
+        Check for updates
+      </Button>
     </div>
   );
 }
